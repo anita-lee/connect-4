@@ -19,10 +19,10 @@ const board = []; // array of rows, each row is array of cells  (board[y][x])
 
 function makeBoard() {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
-  for(let i = 0; i < HEIGHT; i++){
-    let row= [];
+  for (let i = 0; i < HEIGHT; i++) {
+    let row = [];
 
-    for(let j = 0; j < WIDTH; j++){
+    for (let j = 0; j < WIDTH; j++) {
       row.push(null);
     }
     board.push(row);
@@ -77,8 +77,8 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 5
-  for(let y = HEIGHT-1; y >= 0; y--){
-    if(board[y][x] === null) {
+  for (let y = HEIGHT - 1; y >= 0; y--) {
+    if (board[y][x] === null) {
       return y;
     }
   }
@@ -125,9 +125,9 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
-      if(board[0].every(cell => cell === 1 ||cell === 2)) {
-        alert(`Tie, please try again!`)
-      }
+  if (board[0].every(cell => cell === 1 || cell === 2)) {
+    alert(`Tie, please try again!`);
+  }
 
 
   // switch players
@@ -162,9 +162,9 @@ function checkForWin() {
       // [ [y, x], [y, x], [y, x], [y, x] ]
 
       let horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
-      let vert = [[y, x], [y+1, x], [y+2, x], [y+3, x]];
-      let diagDL;
-      let diagDR;
+      let vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
+      let diagDL = [[y, x],[y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
+      let diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
 
       // find winner (only checking each win-possibility as needed)
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
