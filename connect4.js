@@ -53,23 +53,23 @@ function makeHtmlBoard() {
   // uses WIDTH to create table cells for each row
   for (let y = 0; y < HEIGHT; y++) {
     // TODO: Create a table row element and assign to a "row" variable
-    let row = document.createElement("tr"); 
+    let row = document.createElement("tr");
 
     for (let x = 0; x < WIDTH; x++) {
       // TODO: Create a table cell element and assign to a "cell" variable
-      let cell = document.createElement("td"); 
+      let cell = document.createElement("td");
 
       // TODO: add an id, y-x, to the above table cell element
       // you'll use this later, so make sure you use y-x
       cell.setAttribute("id", `${y}-${x}`);
-      
+
 
       // TODO: append the table cell to the table row
       row.append(cell);
 
     }
     // TODO: append the row to the html board
-    htmlBoard.append(row); 
+    htmlBoard.append(row);
   }
 }
 
@@ -77,7 +77,11 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 5
-  return 5;
+  for(let y = HEIGHT-1; y >= 0; y--){
+    if(board[x][y] === null) {
+      return y;
+    } return null;
+  }
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
@@ -85,9 +89,9 @@ function findSpotForCol(x) {
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
   let chosenCell = document.getElementById(`${y}-${x}`);
-  let piece = document.createElement("div"); 
+  let piece = document.createElement("div");
   piece.classList.add(`piece`, `p${currPlayer}`);
-  chosenCell.append(piece); 
+  chosenCell.append(piece);
 }
 
 /** endGame: announce game end */
@@ -111,7 +115,7 @@ function handleClick(evt) {
   // place piece in board and add to HTML table (update player)
   // TODO: add line to update in-memory board
   placeInTable(y, x);
-  board[x][y] = currPlayer; 
+  board[x][y] = currPlayer;
 
   // check for win
   if (checkForWin()) {
@@ -128,7 +132,7 @@ function handleClick(evt) {
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
-  
+  currPlayer === 1 ? currPlayer = 2 : currPlayer = 1;
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
