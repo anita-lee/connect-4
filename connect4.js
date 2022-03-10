@@ -21,6 +21,7 @@ function makeBoard() {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
   for(let i = 0; i < HEIGHT; i++){
     let row= [];
+
     for(let j = 0; j < WIDTH; j++){
       row.push(null);
     }
@@ -32,7 +33,8 @@ function makeBoard() {
 
 function makeHtmlBoard() {
   // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
-  const htmlBoard = document.getElementById("#board");
+  const htmlBoard = document.getElementById("board");
+
   // TODO: create dotted top row, where user can click to drop pieces
   const top = document.createElement("tr");
   top.setAttribute("id", "column-top");
@@ -59,7 +61,7 @@ function makeHtmlBoard() {
 
       // TODO: add an id, y-x, to the above table cell element
       // you'll use this later, so make sure you use y-x
-      cell.setAttribute("id", y-x);
+      cell.setAttribute("id", `${y}-${x}`);
       
 
       // TODO: append the table cell to the table row
@@ -82,6 +84,10 @@ function findSpotForCol(x) {
 
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
+  let chosenCell = document.getElementById(`${y}-${x}`);
+  let piece = document.createElement("div"); 
+  piece.classList.add(`piece`, `p${currPlayer}`);
+  chosenCell.append(piece); 
 }
 
 /** endGame: announce game end */
@@ -102,9 +108,10 @@ function handleClick(evt) {
     return;
   }
 
-  // place piece in board and add to HTML table
+  // place piece in board and add to HTML table (update player)
   // TODO: add line to update in-memory board
   placeInTable(y, x);
+  board[x][y] = currPlayer; 
 
   // check for win
   if (checkForWin()) {
@@ -113,9 +120,15 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
+  for (let row of board) {
+    if (row.every(cell => cell === 1 || cell === 2)) {
+      return endGame(`Tie, please try again!`)
+    }
+  }
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
+  
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
