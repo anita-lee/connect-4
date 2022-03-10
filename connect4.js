@@ -125,14 +125,11 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
-  for(let row of board){
-    for (let i = 0; i < HEIGHT; i++) {
-      if(row[i].every(cell => cell !== 1 && cell !== 2)) {
-        return;
+      if(board[0].every(cell => cell === 1 ||cell === 2)) {
+        alert(`Tie, please try again!`)
       }
-      alert(`Tie, please try again!`)
-    }
-  }
+
+
   // switch players
   // TODO: switch currPlayer 1 <-> 2
   currPlayer === 1 ? currPlayer = 2 : currPlayer = 1;
