@@ -78,10 +78,11 @@ function makeHtmlBoard() {
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 5
   for(let y = HEIGHT-1; y >= 0; y--){
-    if(board[x][y] === null) {
+    if(board[y][x] === null) {
       return y;
-    } return null;
+    }
   }
+  return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
@@ -115,21 +116,23 @@ function handleClick(evt) {
   // place piece in board and add to HTML table (update player)
   // TODO: add line to update in-memory board
   placeInTable(y, x);
-  board[x][y] = currPlayer;
+  board[y][x] = currPlayer;
 
   // check for win
   if (checkForWin()) {
-    return endGame(`Player ${currPlayer} won!`);
+    alert(`Player ${currPlayer} won!`);
   }
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
-  for (let row of board) {
-    if (row.every(cell => cell === 1 || cell === 2)) {
-      return endGame(`Tie, please try again!`)
+  for(let row of board){
+    for (let i = 0; i < HEIGHT; i++) {
+      if(row[i].every(cell => cell !== 1 && cell !== 2)) {
+        return;
+      }
+      alert(`Tie, please try again!`)
     }
   }
-
   // switch players
   // TODO: switch currPlayer 1 <-> 2
   currPlayer === 1 ? currPlayer = 2 : currPlayer = 1;
@@ -162,7 +165,7 @@ function checkForWin() {
       // [ [y, x], [y, x], [y, x], [y, x] ]
 
       let horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
-      let vert;
+      let vert = [[y, x], [y+1, x], [y+2, x], [y+3, x]];
       let diagDL;
       let diagDR;
 
